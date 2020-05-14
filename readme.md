@@ -7,4 +7,4 @@ Pobierz paczkę zip do Twojej wersji opencarta i zainstaluj ją korzystając z i
 # Wsparcie
 Moduł Opencart Inpost został udostępniony za darmo, dlatego prosimy wszystkich jego użytkowników o dobrowolne finansowe wsparcie autora. Dzięki waszym datkom będę w stanie dalej rozwijać ten i pozostałe darmowe moduły do Opencarta.
 
-[https://paypal.me/pools/c/8p6PzJtLZ3]
+Wesprzyj rozwój tego oprogramowania - https://paypal.me/pools/c/8p6PzJtLZ3
