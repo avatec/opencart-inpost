@@ -37,7 +37,7 @@ class ControllerExtensionShippingInpost extends Controller {
 
     public function uninstall()
     {
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "xx_inpostlockerpl`");
+        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "shipping_inpost`");
     }
 
     public function index()
