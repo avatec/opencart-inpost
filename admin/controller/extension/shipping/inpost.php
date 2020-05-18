@@ -227,7 +227,7 @@ class ControllerExtensionShippingInpost extends Controller {
 
     protected function validate()
     {
-		if (!$this->user->hasPermission('modify', 'extension/shipping/flat')) {
+		if (!$this->user->hasPermission('modify', 'extension/shipping/inpost')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
