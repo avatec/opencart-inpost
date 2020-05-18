@@ -129,8 +129,7 @@ class ControllerExtensionShippingInpost extends Controller {
             $query = "WHERE " . implode( " AND " , $filter );
         }
 
-        echo "SELECT * FROM `" . DB_PREFIX . "shipping_inpost` " . (!empty( $query) ? $query : "");
-        $inpost_list = $this->db->query("SELECT * FROM `" . DB_PREFIX . "shipping_inpost` " . (!empty( $query) ? $query : "") );
+        $inpost_list = $this->db->query("SELECT * FROM `" . DB_PREFIX . "shipping_inpost` " . (!empty( $query) ? $query : "") . " ORDER BY CITY");
         $history_total = $inpost_list->num_rows;
         $data['inpost_list'] = $inpost_list->rows;
 
