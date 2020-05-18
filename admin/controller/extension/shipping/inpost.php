@@ -77,6 +77,7 @@ class ControllerExtensionShippingInpost extends Controller {
 
         $data['action'] = $this->url->link('extension/shipping/inpost', 'user_token=' . $this->session->data['user_token'], true);
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true);
+        $data['search_url'] = $this->url->link('extension/shipping/inpost/search', 'user_token=' . $this->session->data['user_token'], true);
 
         if (isset($this->request->post['shipping_inpost_total'])) {
 			$data['shipping_inpost_total'] = $this->request->post['shipping_inpost_total'];
@@ -114,7 +115,22 @@ class ControllerExtensionShippingInpost extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-        $inpost_list = $this->db->query("SELECT * FROM `" . DB_PREFIX . "shipping_inpost`");
+        if (!empty($this->request->get['filter_postcode'])) {
+            $filter['postcode'] = "POST_CODE='" . $this->request->get['filter_postcode'] . "'";
+            $data['filter_postcode'] = $this->request->get['filter_postcode'];
+        }
+
+        if (!empty($this->request->get['filter_city'])) {
+            $filter['city'] = "CITY = '" . $this->request->get['filter_city'] . "'";
+            $data['filter_city'] = $this->request->get['filter_city'];
+        }
+
+        if( !empty( $filter )) {
+            $query = "WHERE " . implode( " AND " , $filter );
+        }
+
+        echo "SELECT * FROM `" . DB_PREFIX . "shipping_inpost` " . (!empty( $query) ? $query : "");
+        $inpost_list = $this->db->query("SELECT * FROM `" . DB_PREFIX . "shipping_inpost` " . (!empty( $query) ? $query : "") );
         $history_total = $inpost_list->num_rows;
         $data['inpost_list'] = $inpost_list->rows;
 
