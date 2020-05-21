@@ -10,6 +10,8 @@ class ModelExtensionShippingInpost extends Model {
     public function getQuote( $address )
     {
         $this->load->language('extension/shipping/inpost');
+	    
+	$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shipping_inpost WHERE CITY = '" . ucfirst(strtolower($address['city'])) . "' OR POST_CODE = '" . $address['postcode'] . "'");
 
         if (!$this->config->get('shipping_free_geo_zone_id')) {
 			$status = true;
@@ -26,9 +28,7 @@ class ModelExtensionShippingInpost extends Model {
         $method_data = array();
 
         if ($status) {
-			$quote_data = array();
-
-            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shipping_inpost WHERE CITY = '" . ucfirst(strtolower($address['city'])) . "' OR POST_CODE = '" . $address['postcode'] . "'");
+	    $quote_data = array();
 
             foreach( $query->rows as $item ) {
                 if( !empty( $item['ID'])) {
