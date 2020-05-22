@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
-  <code>inpost</code>
-  <name>Moduł wysyłki Inpost Paczkomaty</name>
-  <version>1.0.0</version>
-  <author>avatecpl@gmail.com</author>
-  <link>https://avatec.pl</link>
+    <code>inpost</code>
+    <name>Moduł wysyłki Inpost Paczkomaty</name>
+    <version>1.1.0</version>
+    <author>avatecpl@gmail.com</author>
+    <link>https://avatec.pl</link>
+
+    <file name="catalog/controller/checkout/checkout.php">
+    <operation error="log">
+        <search position="after"><![CDATA[function index() {]]></search>
+        <add><![CDATA[
+            /** ++ Inpost Module ++ **/
+            $this->document->addScript('catalog/view/javascript/inpost.js');
+            /** -- Inpost Module -- **/
+        ]]></add>
+    </operation>
+    </file>
 </modification>

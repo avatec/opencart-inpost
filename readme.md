@@ -8,3 +8,11 @@ Pobierz paczkę zip do Twojej wersji opencarta i zainstaluj ją korzystając z i
 Moduł Opencart Inpost został udostępniony za darmo, dlatego prosimy wszystkich jego użytkowników o dobrowolne finansowe wsparcie autora. Dzięki waszym datkom będę w stanie dalej rozwijać ten i pozostałe darmowe moduły do Opencarta.
 
 Wesprzyj rozwój tego oprogramowania - https://paypal.me/pools/c/8p6PzJtLZ3
+
+# Możliwe problemy
+Jeżeli po instalacji, brakuje opisów, skopiuj pliki tłumaczenia language/pl-PL/extension/shipping do właściwego katalogu w Twoim sklepie.
+
+# Modyfikacje podstawowej wersji plików
+1. catalog/controller/checkout/checkout.php
+   Dodano kod ładowania pliku inpost.js zaraz pod function index()
+   
