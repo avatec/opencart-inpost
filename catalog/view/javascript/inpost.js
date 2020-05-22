@@ -1,8 +1,37 @@
 $( document ).ajaxComplete(function() {
     $("#inpostModalMap").off().on('shown.bs.modal' , function() {
         console.log('Otwarto okno, ładowanie mapy google');
-        initMap();
+        var div_contact = document.getElementById('inpost-google-map');
+        var latlng = getLocation();
+
+        if( latlng && latlng.lat ) {
+            var lat = latlng.lat;
+        } else {
+            var lat = div_contact.getAttribute('data-lat');
+        }
+
+        if( latlng && latlng.lng ) {
+            var lng = latlng.lng;
+            var zoom = 12;
+        } else {
+            var lng = div_contact.getAttribute('data-lng');
+            var zoom = div_contact.getAttribute('data-zoom');
+        }
+
+        initMap(lat,lng);
     });
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            return navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        return { lat: position.coords.latitude, lng: position.coords.longitude };
+    }
 
     function getData()
 	{
@@ -20,12 +49,7 @@ $( document ).ajaxComplete(function() {
 	    return def;
 	}
 
-	function initMap() {
-
-	    var div_contact = document.getElementById('inpost-google-map');
-		var lat = div_contact.getAttribute('data-lat');
-		var lng = div_contact.getAttribute('data-lng');
-		var zoom = div_contact.getAttribute('data-zoom');
+	function initMap(lat,lng) {
 		var mapcontent = div_contact.getAttribute('data-content');
 
 	    var myOptions = {
