@@ -11,9 +11,9 @@ $( document ).ajaxComplete(function() {
 		var city = '';
 
 		$.getJSON( '/index.php?route=api/inpost/index', { postcode: postcode, city: city } ).done( function( data ) {
-			console.log( data );
 			def.resolve({
-				data: data
+
+				data: data.data
 			});
 
 	    });
@@ -47,7 +47,7 @@ $( document ).ajaxComplete(function() {
 	    var infowindow = new google.maps.InfoWindow();
 
 	    getData().done( function( data ) {
-		    //console.log( data );
+		    console.log( data );
 		    $.each( data.data, function(k,v) {
 			   	marker = new google.maps.Marker({
 			        map: map,
@@ -67,13 +67,10 @@ $( document ).ajaxComplete(function() {
 
 						infowindow.setContent( content );
 						infowindow.open(map, marker);
-						//console.log( infowindow );
 			        };
 			    })(marker,v,infowindow));
 		    });
 
 	    });
-
-	    //console.log( 'run initmap' );
 	}
 });

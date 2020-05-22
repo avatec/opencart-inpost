@@ -53,9 +53,9 @@ class ModelExtensionShippingInpost extends Model {
 
             // Wyswietlanie jako mapa
             if( !empty( $type ) && ( $type == 1 ) ) {
-                $lat = 50.00;
-                $lng = 21.00;
-                $zoom = 9;
+                $lat = 51.919437;
+                $lng = 19.145136;
+                $zoom = 7;
 
                 $google_api_key = $this->config->get('shipping_inpost_google_api_key');
 
