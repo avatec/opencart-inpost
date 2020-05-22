@@ -1,36 +1,27 @@
 $( document ).ajaxComplete(function() {
     $("#inpostModalMap").off().on('shown.bs.modal' , function() {
         console.log('Otwarto okno, ładowanie mapy google');
-        var div_contact = document.getElementById('inpost-google-map');
-        var latlng = getLocation();
 
-        if( latlng && latlng.lat ) {
-            var lat = latlng.lat;
-        } else {
-            var lat = div_contact.getAttribute('data-lat');
-        }
-
-        if( latlng && latlng.lng ) {
-            var lng = latlng.lng;
-            var zoom = 12;
-        } else {
-            var lng = div_contact.getAttribute('data-lng');
-            var zoom = div_contact.getAttribute('data-zoom');
-        }
-
-        initMap(lat,lng);
+        getLocation();
     });
 
     function getLocation() {
         if (navigator.geolocation) {
-            return navigator.geolocation.getCurrentPosition(showPosition);
+            navigator.geolocation.getCurrentPosition(function( position ) {
+                initMap(position.coords.latitude,position.coords.longitude,12);
+            });
         } else {
+            var div_contact = document.getElementById('inpost-google-map');
+            var lat = div_contact.getAttribute('data-lat');
+            var lng = div_contact.getAttribute('data-lng');
+            var zoom = div_contact.getAttribute('data-zoom');
+            initMap(lat,lng,zoom);
             console.error("Geolocation is not supported by this browser.");
         }
     }
 
     function showPosition(position) {
-        return { lat: position.coords.latitude, lng: position.coords.longitude };
+
     }
 
     function getData()
@@ -49,7 +40,8 @@ $( document ).ajaxComplete(function() {
 	    return def;
 	}
 
-	function initMap(lat,lng) {
+	function initMap(lat,lng,zoom) {
+        var div_contact = document.getElementById('inpost-google-map');
 		var mapcontent = div_contact.getAttribute('data-content');
 
 	    var myOptions = {
