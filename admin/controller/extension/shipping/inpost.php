@@ -85,6 +85,12 @@ class ControllerExtensionShippingInpost extends Controller {
 			$data['shipping_inpost_total'] = $this->config->get('shipping_inpost_total');
 		}
 
+        if (isset($this->request->post['shipping_inpost_google_api_key'])) {
+            $data['shipping_inpost_google_api_key'] = $this->request->post['shipping_inpost_google_api_key'];
+        } else {
+            $data['shipping_inpost_google_api_key'] = $this->config->get('shipping_inpost_google_api_key');
+        }
+
         $this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
@@ -104,6 +110,13 @@ class ControllerExtensionShippingInpost extends Controller {
 		} else {
 			$data['shipping_inpost_status'] = $this->config->get('shipping_inpost_status');
 		}
+
+
+        if (isset($this->request->post['shipping_inpost_type'])) {
+            $data['shipping_inpost_type'] = $this->request->post['shipping_inpost_type'];
+        } else {
+            $data['shipping_inpost_type'] = $this->config->get('shipping_inpost_type');
+        }
 
 		if (isset($this->request->post['shipping_inpost_sort_order'])) {
 			$data['shipping_inpost_sort_order'] = $this->request->post['shipping_inpost_sort_order'];

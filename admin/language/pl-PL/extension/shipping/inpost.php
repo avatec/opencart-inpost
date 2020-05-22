@@ -16,6 +16,8 @@ $_ = [
     'text_edit' => 'Edycja modułu Inpost',
     'text_inpost_list' => 'Lista paczkomatów',
     'text_extension' => 'Rozszerzenia',
+    'text_type_list' => 'Jako lista na podstawie kodu pocztowego i miejscowości',
+    'text_type_map' => 'Możliwość wybrania paczkomatu z mapy lub po kodzie kreskowym',
 
     'text_author' => 'Moduł Opencart Inpost został udostępniony za darmo, dlatego prosimy wszystkich jego użytkowników o dobrowolne finansowe wsparcie autora. Dzięki waszym datkom będę w stanie dalej rozwijać ten i pozostałe darmowe moduły do Opencarta. Zgłoszenia błędów <a href="https://github.com/avatec/opencart-inpost/issues">tutaj</a>.',
 
@@ -25,9 +27,12 @@ $_ = [
     'entry_sort_order' => 'Kolejność wyświetlania',
     'entry_postcode' => 'Kod pocztowy',
     'entry_city' => 'Miejscowość',
+    'entry_type' => 'Sposób wyświetlania',
+    'entry_google_api_key' => 'Klucz Google Maps',
 
 
     'help_total' => 'Koszt wysyłki. Kwota netto.',
+    'help_google_api_key' => 'Wklej klucz Mapy Google',
 
     // Error
     'error_permission'      => 'Uwaga: Nie masz uprawnień do tego działu!',
