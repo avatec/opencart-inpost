@@ -17,7 +17,7 @@ class ModelExtensionShippingInpost extends Model {
             $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shipping_inpost");
         }
 
-        if (!$this->config->get('shipping_free_geo_zone_id')) {
+        if (!$this->config->get('shipping_inpost_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
