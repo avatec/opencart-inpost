@@ -1,3 +1,9 @@
+function btnSelectPoint( id ) {
+    console.log( id );
+    alert( id );
+    $("#inpostModalMap").modal('hide');
+}
+
 $( document ).ajaxComplete(function() {
     $("#inpostModalMap").off().on('shown.bs.modal' , function() {
         console.log('Otwarto okno, ładowanie mapy google');
@@ -8,7 +14,7 @@ $( document ).ajaxComplete(function() {
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function( position ) {
-                initMap(position.coords.latitude,position.coords.longitude,12);
+                initMap(position.coords.latitude,position.coords.longitude,14);
             });
         } else {
             var div_contact = document.getElementById('inpost-google-map');
@@ -79,7 +85,7 @@ $( document ).ajaxComplete(function() {
 				        var content = '<div class="iw-map-container text-left">' +
 				        '<p class="text-left"><b>' + v.description + '</b><br/>' + v.street + '<br/>' + v.postcode + ' ' + v.city + '</p>' +
 				        '</div>' +
-                        '<a target="_blank" href="http://maps.google.com/maps?daddr=' + v.lat + ',%20'+ v.lng + '&ll="class="btn btn-default btn-sm" type="button"><i class="fa fa-map-marker"></i> pokaż na mapie</a>';
+                        '<button type="button" onclick="btnSelectPoint(\'' + v.id + '\');" class="btn btn-default btn-sm"><i class="fa fa-check"></i> wybierz ten paczkomat</button>';
 
 						infowindow.setContent( content );
 						infowindow.open(map, marker);
