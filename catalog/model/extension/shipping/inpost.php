@@ -115,7 +115,7 @@ class ModelExtensionShippingInpost extends Model {
                 $inpost_id = 'inpost_' . $item['ID'];
                 $quote_data[$inpost_id] = array(
                     'code'         => 'inpost.' . $inpost_id,
-                    'title'        => '(' . $item['ID'] . ') - ' . $item['STREET'] . ' ' . $item['BUILDING_NUMBER'] . ', ' . $item['CITY'] . '" class="hidden"',
+                    'title'        => '(' . $item['ID'] . ') - ' . $item['STREET'] . ' ' . $item['BUILDING_NUMBER'] . ', ' . $item['CITY'],
                     'cost'         => $this->config->get('shipping_inpost_total'),
                     'tax_class_id' => $this->config->get('shipping_inpost_tax_class_id'),
                     'text'         => $this->currency->format($this->tax->calculate($this->config->get('shipping_inpost_total'), $this->config->get('shipping_inpost_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
