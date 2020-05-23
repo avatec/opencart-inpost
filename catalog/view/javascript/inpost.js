@@ -1,7 +1,24 @@
-function btnSelectPoint( id ) {
-    console.log( id );
-    alert( id );
+function btnSelectPoint( id, address ) {
     $("#inpostModalMap").modal('hide');
+    setTimeout( function() {
+        $("#inpostModalMap").after('<div class="radio"><label>' +
+        '<input type="radio" name="shipping_method" value="inpost.inpost_' + id + '" checked="checked">' +
+        id + ' - ' + address + '</label></div>');
+
+        $.ajax({
+            url: '/index.php?route=api/inpost/setData',
+            type: 'POST',
+            data: { id: id },
+            error: function( err ) {
+                if( err.responseText ) {
+                    console.error( err.responseText );
+                }
+            },
+            success: function( r ) {
+                console.log( r );
+            }
+        });
+    },1000);
 }
 
 $( document ).ajaxComplete(function() {
@@ -85,7 +102,7 @@ $( document ).ajaxComplete(function() {
 				        var content = '<div class="iw-map-container text-left">' +
 				        '<p class="text-left"><b>' + v.description + '</b><br/>' + v.street + '<br/>' + v.postcode + ' ' + v.city + '</p>' +
 				        '</div>' +
-                        '<button type="button" onclick="btnSelectPoint(\'' + v.id + '\');" class="btn btn-default btn-sm"><i class="fa fa-check"></i> wybierz ten paczkomat</button>';
+                        '<button type="button" onclick="btnSelectPoint(\'' + v.id + '\', \'' + v.street + ', ' + v.city + '\');" class="btn btn-default btn-sm"><i class="fa fa-check"></i> wybierz ten paczkomat</button>';
 
 						infowindow.setContent( content );
 						infowindow.open(map, marker);

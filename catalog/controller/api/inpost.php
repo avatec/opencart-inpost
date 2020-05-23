@@ -20,4 +20,14 @@ class ControllerApiInpost extends Controller {
             'data' => $data
         ]));
     }
+
+    public function setData()
+    {
+        $this->load->model('extension/shipping/inpost');
+
+        $data = $this->model_extension_shipping_inpost->generateQuote( $this->request->post );
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput($data);
+    }
 }

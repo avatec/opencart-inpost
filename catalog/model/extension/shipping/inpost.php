@@ -57,10 +57,12 @@ class ModelExtensionShippingInpost extends Model {
                 $lng = 19.145136;
                 $zoom = 7;
 
+                $cost = $this->currency->format($this->tax->calculate($this->config->get('shipping_inpost_total'), $this->config->get('shipping_inpost_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency']);
                 $google_api_key = $this->config->get('shipping_inpost_google_api_key');
 
-                $title = '<script src="https://maps.googleapis.com/maps/api/js?key=' . $google_api_key . '"></script>
-                <button id="showInpostMap" type="button" data-toggle="modal" data-target="#inpostModalMap">' . $this->language->get('button_select_item') . '</button>
+                $title = $this->language->get('text_title') . ' - ' . $cost . '<br/>' .
+                '<script src="https://maps.googleapis.com/maps/api/js?key=' . $google_api_key . '"></script>
+                <button id="showInpostMap" type="button" data-toggle="modal" data-target="#inpostModalMap" class="btn btn-primary">' . $this->language->get('button_select_item') . '</button>
                 <div id="inpostModalMap" class="modal fade" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -73,7 +75,6 @@ class ModelExtensionShippingInpost extends Model {
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal" data-target="inpostModalMap">' . $this->language->get('button_close') . '</button>
-                                <button type="button" class="btn btn-primary">' . $this->language->get('button_select') . '</button>
                             </div>
                         </div>
                     </div>
@@ -90,8 +91,6 @@ class ModelExtensionShippingInpost extends Model {
             );
 
 		}
-
-
 
 		return $method_data;
     }
@@ -112,8 +111,56 @@ class ModelExtensionShippingInpost extends Model {
                     'lat' => $item['LATITUDE'],
                     'lng' => $item['LONGITUDE']
                 ];
+
+                $inpost_id = 'inpost_' . $item['ID'];
+                $quote_data[$inpost_id] = array(
+                    'code'         => 'inpost.' . $inpost_id,
+                    'title'        => '(' . $item['ID'] . ') - ' . $item['STREET'] . ' ' . $item['BUILDING_NUMBER'] . ', ' . $item['CITY'] . '" class="hidden"',
+                    'cost'         => $this->config->get('shipping_inpost_total'),
+                    'tax_class_id' => $this->config->get('shipping_inpost_tax_class_id'),
+                    'text'         => $this->currency->format($this->tax->calculate($this->config->get('shipping_inpost_total'), $this->config->get('shipping_inpost_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
+                );
             }
         }
+
         return $map;
+    }
+
+    public function generateQuote( $post )
+    {
+        $this->load->language('extension/shipping/inpost');
+
+        if( empty( $post['id'] )) {
+            $json = array('error' => true, 'msg' => 'Brak parametru POST id');
+        } else {
+            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shipping_inpost WHERE ID='" . $post['id'] . "'");
+            if ($query->num_rows) {
+                foreach( $query->rows as $item )
+                {
+                    $inpost_id = 'inpost_' . $item['ID'];
+                    $quote_data[$inpost_id] = array(
+                        'code'         => 'inpost.' . $inpost_id,
+                        'title'        => '(' . $item['ID'] . ') - ' . $item['STREET'] . ' ' . $item['BUILDING_NUMBER'] . ', ' . $item['CITY'],
+                        'cost'         => $this->config->get('shipping_inpost_total'),
+                        'tax_class_id' => $this->config->get('shipping_inpost_tax_class_id'),
+                        'text'         => $this->currency->format($this->tax->calculate($this->config->get('shipping_inpost_total'), $this->config->get('shipping_inpost_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
+                    );
+                }
+
+                //file_put_contents( DIR_APPLICATION . 'inpost.log' , print_r($this->session->data, true));
+                $this->session->data['shipping_methods']['inpost'] = [
+                    'title' => 'Paczkomaty Inpost',
+                    'quote' => $quote_data,
+                    'sort_order' => 0,
+                    'error' => ''
+
+                ];
+                //file_put_contents( DIR_APPLICATION . 'inpost.log' , print_r($this->session->data['shipping_methods'], true));
+
+                $json = array('success' => true);
+            }
+        }
+
+        return json_encode( $json );
     }
 }
