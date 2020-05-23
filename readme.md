@@ -12,6 +12,8 @@ Pobierz paczkę zip do Twojej wersji opencarta i zainstaluj ją korzystając z i
 # Możliwe problemy
 Jeżeli po instalacji, brakuje opisów, skopiuj pliki tłumaczenia language/pl-PL/extension/shipping do właściwego katalogu w Twoim sklepie.
 
+Znalazłeś(aś) błąd ? Zgłoś go: https://github.com/avatec/opencart-inpost/issues
+
 # Modyfikacje podstawowej wersji plików
 1. catalog/controller/checkout/checkout.php
    Dodano kod ładowania pliku inpost.js zaraz pod function index()
