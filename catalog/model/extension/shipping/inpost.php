@@ -71,6 +71,19 @@ class ModelExtensionShippingInpost extends Model {
                                 <h4 class="modal-title">' . $this->language->get('text_select_header') . '</h4>
                             </div>
                             <div class="modal-body">
+                                <div class="form-group row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <input class="form-control" type="text" name="inpost-postcode" id="inpost-postcode" placeholder="Kod pocztowy" />
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <input class="form-control" type="text" name="inpost-id" id="inpost-id" placeholder="Numer paczkomatu" />
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <button type="button" id="btnInpostFindByForm" class="btn btn-primary btn-block">
+                                            Wyszukaj paczkomaty
+                                        </button>
+                                    </div>
+                                </div>
                                 <div id="inpost-google-map" style="width:100%;height:500px;" data-lat="' . $lat . '" data-lng="' . $lng . '" data-zoom="' . $zoom . '"></div>
                             </div>
                             <div class="modal-footer">
@@ -95,9 +108,16 @@ class ModelExtensionShippingInpost extends Model {
 		return $method_data;
     }
 
-    public function getJson()
+    public function getJson( $data = null )
     {
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shipping_inpost");
+        if( !empty( $data['postcode'] )) {
+            $q[] = "POST_CODE='" . $data['postcode'] . "'";
+        }
+        if( !empty( $data['id'] )) {
+            $q[] = "ID='" . $data['id'] . "'";
+        }
+
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shipping_inpost" . (!empty( $q ) ? " WHERE " . implode( " AND " , $q ) : ""));
         if ($query->num_rows) {
             foreach( $query->rows as $item )
             {
@@ -115,7 +135,7 @@ class ModelExtensionShippingInpost extends Model {
                 $inpost_id = 'inpost_' . $item['ID'];
                 $quote_data[$inpost_id] = array(
                     'code'         => 'inpost.' . $inpost_id,
-                    'title'        => '(' . $item['ID'] . ') - ' . $item['STREET'] . ' ' . $item['BUILDING_NUMBER'] . ', ' . $item['CITY'],
+                    'title'        => '(' . $item['ID'] . ') - ' . $item['STREET'] . ' ' . $item['BUILDING_NUMBER'] . ', ' . $item['CITY'] . '" class="hidden"',
                     'cost'         => $this->config->get('shipping_inpost_total'),
                     'tax_class_id' => $this->config->get('shipping_inpost_tax_class_id'),
                     'text'         => $this->currency->format($this->tax->calculate($this->config->get('shipping_inpost_total'), $this->config->get('shipping_inpost_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
