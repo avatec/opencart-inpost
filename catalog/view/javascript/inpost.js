@@ -22,7 +22,7 @@ function btnSelectPoint( id, address ) {
 }
 
 $( document ).ajaxComplete(function() {
-    $("#inpostModalMap").off().on('shown.bs.modal' , function() {
+    $("#inpostModalMap").on('shown.bs.modal' , function() {
         console.log('Otwarto okno, ładowanie mapy google');
 
         getLocation();

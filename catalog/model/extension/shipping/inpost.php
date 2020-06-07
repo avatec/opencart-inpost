@@ -87,7 +87,7 @@ class ModelExtensionShippingInpost extends Model {
                                 <div id="inpost-google-map" style="width:100%;height:500px;" data-lat="' . $lat . '" data-lng="' . $lng . '" data-zoom="' . $zoom . '"></div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal" data-target="inpostModalMap">' . $this->language->get('button_close') . '</button>
+                                <button id="btnCloseInpostModal" type="button" class="btn btn-default" data-dismiss="modal" data-target="#inpostModalMap">' . $this->language->get('button_close') . '</button>
                             </div>
                         </div>
                     </div>
