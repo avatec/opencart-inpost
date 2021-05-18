@@ -6,7 +6,7 @@ function btnSelectPoint( id, address ) {
         id + ' - ' + address + '</label></div>');
 
         $.ajax({
-            url: '/index.php?route=api/inpost/setData',
+            url: '/index.php?route=extension/shipping/inpost/setData',
             type: 'POST',
             data: { id: id },
             error: function( err ) {
@@ -65,7 +65,7 @@ $( document ).ajaxComplete(function() {
 
         console.log( postcode, id );
 
-		$.getJSON( '/index.php?route=api/inpost/index', { postcode: postcode, id: id } ).done( function( data ) {
+		$.getJSON( '/index.php?route=extension/shipping/inpost/index', { postcode: postcode, id: id } ).done( function( data ) {
 			def.resolve({
 
 				data: data.data

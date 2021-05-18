@@ -33,6 +33,7 @@ class ControllerExtensionShippingInpost extends Controller {
 			  KEY `PROVINCE` (`PROVINCE`)
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;
 		");
+        $this->db->query("ALTER TABLE `" . DB_PREFIX . "shipping_inpost` ADD FULLTEXT( `CITY`);");
     }
 
     public function uninstall()
