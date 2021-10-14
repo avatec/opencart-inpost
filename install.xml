@@ -2,13 +2,13 @@
 <modification>
     <code>inpost</code>
     <name>Moduł wysyłki Inpost Paczkomaty</name>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <author>avatecpl@gmail.com</author>
     <link>https://avatec.pl</link>
 
     <file name="catalog/controller/checkout/checkout.php">
     <operation error="log">
-        <search position="after"><![CDATA[function index() {]]></search>
+        <search position="after"><![CDATA[$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');]]></search>
         <add><![CDATA[
             /** ++ Inpost Module ++ **/
             $this->document->addScript('catalog/view/javascript/inpost.js');
