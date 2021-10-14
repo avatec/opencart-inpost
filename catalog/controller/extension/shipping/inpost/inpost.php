@@ -6,7 +6,7 @@
  */
 
 
-class ControllerExtensionModuleInpost extends Controller {
+class ControllerExtensionShippingInpostInpost extends Controller {
 
     public function index()
     {
