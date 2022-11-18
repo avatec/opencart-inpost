@@ -2,25 +2,23 @@
 <modification>
     <code>inpost</code>
     <name>Moduł wysyłki Inpost Paczkomaty</name>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <author>avatecpl@gmail.com</author>
     <link>https://avatec.pl</link>
 
     <file name="catalog/controller/checkout/checkout.php">
     <operation error="log">
-        <search position="after"><![CDATA[$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');]]></search>
-        <add><![CDATA[
-            /** ++ Inpost Module ++ **/
+        <search index="0" ><![CDATA[$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');]]></search>
+        <add position="after"><![CDATA[
             $this->document->addScript('catalog/view/javascript/inpost.min.js');
-            /** -- Inpost Module -- **/
         ]]></add>
     </operation>
     </file>
 
     <file name="catalog/controller/checkout/shipping_method.php">
     <operation error="log">
-        <search position="after"><![CDATA['title'      => $quote['title'],]]></search>
-        <add><![CDATA[
+        <search index="0"><![CDATA['title'      => $quote['title'],]]></search>
+        <add position="after"><![CDATA[
             'type'		 => (empty( $quote['type'] ) ? 'radio' : $quote['type']),
         ]]></add>
     </operation>
@@ -28,8 +26,8 @@
 
     <file name="catalog/view/theme/default/template/checkout/shipping_method.twig">
     <operation error="log">
-        <search position="after"><![CDATA[<p><strong>{{ shipping_method.title }}</strong></p>]]></search>
-        <add><![CDATA[
+        <search index="0" ><![CDATA[<p><strong>{{ shipping_method.title }}</strong></p>]]></search>
+        <add position="after"><![CDATA[
         {% if shipping_method.type == "radio" %}
         ]]></add>
     </operation>
@@ -37,9 +35,9 @@
     
     <file name="catalog/view/theme/default/template/checkout/shipping_method.twig">
     <operation error="log">
-        <search position="after"><![CDATA[<div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
+        <search index="0"><![CDATA[<div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
   {% endif %}]]></search>
-        <add><![CDATA[
+        <add position="after"><![CDATA[
         {% else %}
   {% if not shipping_method.error %}
   <div class="select">
