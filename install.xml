@@ -2,7 +2,7 @@
 <modification>
     <code>inpost</code>
     <name>Moduł wysyłki Inpost Paczkomaty</name>
-    <version>1.1.1</version>
+    <version>1.2.1</version>
     <author>avatecpl@gmail.com</author>
     <link>https://avatec.pl</link>
 
@@ -13,6 +13,51 @@
             /** ++ Inpost Module ++ **/
             $this->document->addScript('catalog/view/javascript/inpost.min.js');
             /** -- Inpost Module -- **/
+        ]]></add>
+    </operation>
+    </file>
+
+    <file name="catalog/controller/checkout/shipping_method.php">
+    <operation error="log">
+        <search position="after"><![CDATA['title'      => $quote['title'],]]></search>
+        <add><![CDATA[
+            'type'		 => (empty( $quote['type'] ) ? 'radio' : $quote['type']),
+        ]]></add>
+    </operation>
+    </file>
+
+    <file name="catalog/view/theme/default/template/checkout/shipping_method.twig">
+    <operation error="log">
+        <search position="after"><![CDATA[<p><strong>{{ shipping_method.title }}</strong></p>]]></search>
+        <add><![CDATA[
+        {% if shipping_method.type == "radio" %}
+        ]]></add>
+    </operation>
+    </file>
+    
+    <file name="catalog/view/theme/default/template/checkout/shipping_method.twig">
+    <operation error="log">
+        <search position="after"><![CDATA[<div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
+  {% endif %}]]></search>
+        <add><![CDATA[
+        {% else %}
+  {% if not shipping_method.error %}
+  <div class="select">
+    <select name="shipping_method" class="form-control">
+    {% for quote in shipping_method.quote %}
+    
+      {% if quote.code == code or not code %}
+      {% set code = quote.code %}
+      <option value="{{ quote.code }}" selected>{{ quote.title }} - {{ quote.text }}</option>
+      {% else %}
+      <option value="{{ quote.code }}">{{ quote.title }} - {{ quote.text }}</option>
+      {% endif %}
+    {% endfor %}
+    </select>
+  {% else %}
+  <div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
+  {% endif %}
+{% endif %}
         ]]></add>
     </operation>
     </file>

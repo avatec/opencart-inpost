@@ -97,6 +97,7 @@ class ModelExtensionShippingInpost extends Model {
 
             $method_data = array(
                 'code'       => 'inpost',
+                'type'       => 'select',
                 'title'      => $title,
                 'quote'      => $quote_data,
                 'sort_order' => $this->config->get('shipping_free_sort_order'),
