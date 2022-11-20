@@ -6,11 +6,11 @@
     <author>biuro@avatec.pl</author>
     <link>https://avatec.pl</link>
     <file name="catalog/controller/checkout/checkout.php">
-    <operation>
-        <search index="0"><![CDATA[// Required by klarna]]></search>
-        <add position="before"><![CDATA[$this->document->addScript('catalog/view/javascript/inpost.min.js');
-        ]]></add>
-    </operation>
+        <operation>
+            <search index="0"><![CDATA[// Required by klarna]]></search>
+            <add position="before"><![CDATA[$this->document->addScript('catalog/view/javascript/inpost.min.js');
+]]></add>
+        </operation>
     </file>
     <file name="catalog/controller/checkout/shipping_method.php">
     <operation>

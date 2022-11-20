@@ -1,0 +1,54 @@
+{% if error_warning %}
+<div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+{% endif %}
+{% if shipping_methods %}
+<p>{{ text_shipping_method }}</p>
+{% for shipping_method in shipping_methods %}
+<p><strong>{{ shipping_method.title }}</strong></p>
+{% if shipping_method.type == "radio" %}
+  {% if not shipping_method.error %}
+  {% for quote in shipping_method.quote %}
+  <div class="radio">
+    <label> {% if quote.code == code or not code %}
+      {% set code = quote.code %}
+      <input type="radio" name="shipping_method" value="{{ quote.code }}" checked="checked" />
+      {% else %}
+      <input type="radio" name="shipping_method" value="{{ quote.code }}" />
+      {% endif %}
+      {{ quote.title }} - {{ quote.text }}</label>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
+  {% endif %}
+{% else %}
+  {% if not shipping_method.error %}
+  <div class="select">
+    {% for quote in shipping_method.quote %}
+    <input id="inpostRadio{{ quote.code }}" type="radio" name="shipping_method" value="{{ quote.code }}" style="display:none;" />
+    {% endfor %}
+    <select id="shippingMethodSelect" name="shipping_method_select" class="form-control">
+    {% for quote in shipping_method.quote %}
+      {% if quote.code == code or not code %}
+      {% set code = quote.code %}
+      <option value="{{ quote.code }}" selected>{{ quote.title }} - {{ quote.text }}</option>
+      {% else %}
+      <option value="{{ quote.code }}">{{ quote.title }} - {{ quote.text }}</option>
+      {% endif %}
+    {% endfor %}
+    </select>
+  {% else %}
+  <div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
+  {% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+<p><strong>{{ text_comments }}</strong></p>
+<p>
+  <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
+</p>
+<div class="buttons">
+  <div class="pull-right">
+    <input type="button" value="{{ button_continue }}" id="button-shipping-method" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+  </div>
+</div>

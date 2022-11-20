@@ -28,6 +28,11 @@ $( document ).ajaxComplete(function() {
         getLocation();
     });
 
+	$("#shippingMethodSelect").on('change' , function() {
+		var code = $(this).val();
+		document.getElementById('inpostRadio' + code).checked = true;
+	});
+
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function( position ) {
