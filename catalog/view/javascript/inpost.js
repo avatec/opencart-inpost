@@ -30,7 +30,9 @@ $( document ).ajaxComplete(function() {
 
 	$("#shippingMethodSelect").on('change' , function() {
 		var code = $(this).val();
+		console.log( code );
 		document.getElementById('inpostRadio' + code).checked = true;
+		console.log( 'inpostRadio' + code );
 	});
 
     function getLocation() {
